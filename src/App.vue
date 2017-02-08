@@ -2,46 +2,29 @@
     <div class="app">
         <transition leave-active-class="animated fadeOut">
             <div v-if="is_show_loading" class="loading">
-                <md-spinner md-indeterminate></md-spinner>
+                <md-spinner md-indeterminate />
             </div>
         </transition>
-        <div class="fixed-top">
-            <md-toolbar class="md-dense">
-                <md-button class="md-icon-button">
-                    <md-icon>menu</md-icon>
-                </md-button>
-                <md-layout class="md-title">
-                    {{ title }}
-                </md-layout>
-                <md-button class="md-icon-button">
-                    <md-icon>favorite</md-icon>
-                </md-button>
-            </md-toolbar>
-        </div>
-        <transition leave-active-class="animated fadeOut">
-            <router-view class="wrapper-container"></router-view>
+        <layout-header />
+        <transition enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
+            <router-view />
         </transition>
-        <div class="fixed-bottom">
-            <md-bottom-bar>
-                <md-bottom-bar-item md-icon="history" md-active>Recents</md-bottom-bar-item>
-                <md-bottom-bar-item md-icon="favorite">Favorites</md-bottom-bar-item>
-                <md-bottom-bar-item md-icon="near_me">Nearby</md-bottom-bar-item>
-            </md-bottom-bar>
-        </div>
     </div>
 </template>
 
 <script lang="babel">
     import { mapGetters } from 'vuex'
-    import Loaders from './components/widget/Loaders.vue'
+    import LayoutHeader from './components/layout/Header.vue'
+//    import Loaders from './components/widget/Loaders.vue'
 
     export default {
         components: {
-            Loaders
+//            Loaders,
+            LayoutHeader
         },
         data(){
             return {
-                is_show_loading: true,
+                is_show_loading: false,
             }
         },
         computed: {
@@ -62,7 +45,7 @@
         },
         watch: {},
         created(){
-            this.location();
+            //this.location();
         },
         methods: {
             location(){
@@ -102,22 +85,6 @@
 
 <style lang="scss">
     .app {
-        .fixed-top, .fixed-bottom {
-            position: fixed;
-            left: 0;
-            width: 100%;
-            z-index: 1;
-        }
-        .fixed-top {
-            top: 0;
-        }
 
-        .fixed-bottom {
-            bottom: 0;
-        }
-
-        .wrapper-container {
-            padding: 48px 0 56px 0;
-        }
     }
 </style>

@@ -13,6 +13,18 @@ export default {
             component: lazyLoading('Home')
         },
         {
+            name: 'Auth',
+            path: '/auth',
+            component: lazyLoading('Auth', true),
+            children: [
+                {
+                    name: 'Auth.Login',
+                    path: 'login',
+                    component: lazyLoading('Auth/Login')
+                },
+            ]
+        },
+        {
             path: '*',
             redirect: '/'
         }

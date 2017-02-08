@@ -3,7 +3,6 @@
  * 保存vuex 到 sessionStorage
  * Created by stevie on 2016/12/22.
  */
-import merge from 'lodash/merge'
 import set from 'lodash/set'
 import get from 'lodash/get'
 
@@ -23,7 +22,7 @@ export default function createPersistedState({
 } = {}) {
     return store => {
         store.replaceState(
-            merge({}, store.state, getState(key))
+            Object.assign({}, store.state, getState(key))
         );
 
         store.subscribe((mutation, state) => {

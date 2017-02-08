@@ -29,12 +29,15 @@ Vue.material.setCurrentTheme('default');
  *
  * https://leancloud.cn/docs/leanstorage-started-js.html
  */
-// import AV from 'leancloud-storage'
-// const appId = 'N72dGJaXBCfiQAqIWTq5uHid-gzGzoHsz';
-// const appKey = '2Q9xOtIBMTQ39hwgbBjKptwy';
-// AV.init({ appId, appKey });
-//
-// window.AV = AV;
+import AV from 'leancloud-storage'
+
+AV.init({
+    appId: 'N72dGJaXBCfiQAqIWTq5uHid-gzGzoHsz',
+    appKey: '2Q9xOtIBMTQ39hwgbBjKptwy',
+    //masterKey: 'XXOMmvyjQfEjptDUj0Eb6X0A'
+});
+
+window.AV = AV;
 
 import '../assets/scss/main.scss';
 
