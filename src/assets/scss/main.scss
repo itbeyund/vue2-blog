@@ -1,6 +1,8 @@
 //来源:http://www.w3cplus.com/preprocessor/sass-guidelin-part-4.html
 //https://sass-guidelin.es/#architecture
 
+@import "vendors";  /*第三方类*/
+
 @import 'abstracts';
 
 @import 'base/reset';
@@ -8,8 +10,6 @@
 
 @import "assets";   /*图片字体等*/
 @import "helper";   /*辅助类*/
-
-@import "vendors";  /*第三方类*/
 
 @import 'components/loading';
 

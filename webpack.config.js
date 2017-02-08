@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const port = Math.floor(Math.random() * (65535 - 1024)) + 1024;
 const is_production = process.env.NODE_ENV === 'production';
 
 let vue_options = {};
@@ -18,7 +17,7 @@ if (is_production) {
             fallbackLoader: 'vue-style-loader?sourceMap'
         }),
     };
-}else{
+} else {
     vue_options.loaders = {
         css: 'vue-style-loader?sourceMap!css-loader?sourceMap!postcss-loader?sourceMap',
         scss: 'vue-style-loader?sourceMap!css-loader?sourceMap!postcss-loader?sourceMap!sass-loader?sourceMap',
@@ -33,6 +32,7 @@ module.exports = {
         filename: 'js/[name].js'
     },
     module: {
+        noParse: /node_modules\/(jquey|moment|chart\.js)/,
         rules: [
             {
                 test: /\.vue$/,
@@ -45,7 +45,7 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                loader: 'babel-loader',
+                loader: 'babel-loader?cacheDirectory',
                 exclude: /node_modules/,
             },
             {
@@ -70,17 +70,19 @@ module.exports = {
             'vue-router': 'vue-router/dist/vue-router.min.js',
             'vue-resource': 'vue-resource/dist/vue-resource.min.js',
             'vuex': 'vuex/dist/vuex.min.js',
-            'jquery': 'jquery/dist/jquery.min.js',
-        }
+        },
+        modules: [
+            path.resolve(__dirname, 'node_modules')
+        ]
     },
     plugins: [
         // new webpack.LoaderOptionsPlugin({
-        // vue: vue_options
+            // vue: vue_options
         // }),
         // new webpack.ProvidePlugin({
-        //     $: 'jquery',
-        //     jQuery: 'jquery',
-        //     "window.jQuery": 'jquery',
+            // $: 'jquery',
+            // jQuery: 'jquery',
+            // "window.jQuery": 'jquery',
         // }),
         new HtmlWebpackPlugin({
             title: 'vue2',
@@ -95,9 +97,9 @@ module.exports = {
             hash: true
         })
     ],
-    // externals: {
-    //     'AMap': 'AMap'
-    // },
+    externals: {//扩展 window 对象
+        // 'AMap': 'AMap'
+    },
     performance: {
         hints: false, //关闭警告
     },
@@ -109,7 +111,7 @@ module.exports = {
         compress: true,
         contentBase: "./dist/",
         host: '0.0.0.0',
-        port: 5211, //port
+        port: 5211, //Math.floor(Math.random() * (65535 - 1024)) + 1024,
     },
 };
 
@@ -126,8 +128,20 @@ if (is_production) {
             }
         }),
         new webpack.optimize.UglifyJsPlugin({
+            // 最紧凑的输出
+            beautify: false,
+            // 删除所有的注释
+            comments: false,
             compress: {
-                warnings: false
+                // 在UglifyJs删除没有用到的代码时不输出警告
+                warnings: false,
+                // 删除所有的 `console` 语句
+                // 还可以兼容ie浏览器
+                drop_console: true,
+                // 内嵌定义了但是只用到一次的变量
+                collapse_vars: true,
+                // 提取出出现多次但是没有定义成变量去引用的静态值
+                reduce_vars: true,
             }
         }),
         new webpack.LoaderOptionsPlugin({

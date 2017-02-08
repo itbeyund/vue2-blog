@@ -12,19 +12,18 @@ Vue.config.silent = true;
 Vue.config.devtools = true;
 
 /* ============
- * Vue Resource
+ * Vuex Store
  * ============
  *
- * Vue Resource provides services for making web requests and handle
- * responses using a XMLHttpRequest or JSONP.
+ * The store of the application
  *
- * https://github.com/vuejs/vue-resource/tree/master/docs
+ * http://vuex.vuejs.org/en/index.html
+ * https://github.com/robinvdvleuten/vuex-persistedstate
  */
-import VueResource from 'vue-resource'
+import Vuex from 'vuex'
 
-Vue.use(VueResource);
-// Vue.http.options.root = '';
-// Vue.http.headers.common['X-CSRF-TOKEN'] = 'Basic YXBpOnBhc3N3b3Jk';
+Vue.use(Vuex);
+const store = new Vuex.Store(require('../store'));
 
 /* ============
  * Vue Router
@@ -38,20 +37,21 @@ Vue.use(VueResource);
 import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
-const router = new VueRouter(require('./router').default);
+const router = new VueRouter(require('./router'));
 
 /* ============
- * Vuex Store
+ * Vue Resource
  * ============
  *
- * The store of the application
+ * Vue Resource provides services for making web requests and handle
+ * responses using a XMLHttpRequest or JSONP.
  *
- * http://vuex.vuejs.org/en/index.html
- * https://github.com/robinvdvleuten/vuex-persistedstate
+ * https://github.com/vuejs/vue-resource/tree/master/docs
  */
-import Vuex from 'vuex'
+import VueResource from 'vue-resource'
 
-Vue.use(Vuex);
-const store = new Vuex.Store(require('../store').default);
+Vue.use(VueResource);
+// Vue.http.options.root = '';
+// Vue.http.headers.common['X-CSRF-TOKEN'] = 'Basic YXBpOnBhc3N3b3Jk';
 
 export default {router, store}
